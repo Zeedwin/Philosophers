@@ -6,7 +6,7 @@
 /*   By: jgirard- <jgirard-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 15:36:46 by jgirard-          #+#    #+#             */
-/*   Updated: 2022/11/23 16:35:59 by jgirard-         ###   ########.fr       */
+/*   Updated: 2022/11/23 19:06:56 by jgirard-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,22 +30,42 @@ void	initphvars(int ac, char **av, t_struct *s)
 	s->time.tto_die = ft_atoi(av[2]);
 	s->time.tto_eat = ft_atoi(av[3]);
 	s->time.tto_sleep = ft_atoi(av[4]);
+	s->phil.phindex = 0;
 	if (ac > 5)
 	s->time.num_eat = ft_atoi(av[5]);
 	else
 		s->time.num_eat = 0;
 	printf("Number of philosophers: %d\n", s->phil.nphilo);
-	printf("Time to die: %d\n", s->time.tto_die);
-	printf("Time to eat: %d\n", s->time.tto_eat);
-	printf("Time to sleep: %d\n", s->time.tto_sleep);
-	printf("Number of times each philosopher must eat: %d\n", s->time.num_eat);
+	//printf("Time to die: %d\n", s->time.tto_die);
+	//printf("Time to eat: %d\n", s->time.tto_eat);
+	//printf("Time to sleep: %d\n", s->time.tto_sleep);
+	//printf("Number of times each philosopher must eat: %d\n", s->time.num_eat);
 }	
+
+void	*philosopher(t_struct s)
+{
+	//int			i;
+
+	//i = 0;
+	//printf("%d", s.phil.nphilo);
+	while (s.phil.phindex < s.phil.nphilo)
+	{
+		printf("%d has taken a fork\n", s.phil.phindex);
+		s.phil.phindex++;
+	}
+	exit (EXIT_SUCCESS);
+}
 
 int	main(int ac, char **av)
 {
 	t_struct	s;
+	pthread_t	ph;
+	int			*res;
 
 	initphvars(ac, av, &s);
-	
+	if (pthread_create(&ph, NULL, philosopher(s), NULL) != 0)
+		return	(1);
+	if (pthread_join(ph, (void**) &res) != 0)
+		return (2);
 	return (0);
 }

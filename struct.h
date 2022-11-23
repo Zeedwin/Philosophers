@@ -6,7 +6,7 @@
 /*   By: jgirard- <jgirard-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 17:01:36 by jgirard-          #+#    #+#             */
-/*   Updated: 2022/11/23 13:52:05 by jgirard-         ###   ########.fr       */
+/*   Updated: 2022/11/23 19:05:58 by jgirard-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@
 
 typedef struct philosophers
 {
-	pthread_mutex_t	*fork;
-	pthread_t		*philo;
+	pthread_mutex_t	*fork[200];
+	pthread_t		*philo[200];
 	int				nphilo;
+	int				phindex;
 }					t_phil;
 
 typedef struct times
