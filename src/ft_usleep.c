@@ -6,7 +6,7 @@
 /*   By: jgirard- <jgirard-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/01 15:48:10 by jgirard-          #+#    #+#             */
-/*   Updated: 2022/12/01 16:00:31 by jgirard-         ###   ########.fr       */
+/*   Updated: 2022/12/01 17:51:15 by jgirard-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ int	ft_usleep(useconds_t usec)
 	after = start;
 	while (after - start < usec)
 	{
-		if (usleep(usec) == -1)
-			return (-1);
+		usleep(1);
 		after = philo_get_time();
 	}
 	return (0);

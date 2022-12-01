@@ -6,7 +6,7 @@
 /*   By: jgirard- <jgirard-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 17:01:36 by jgirard-          #+#    #+#             */
-/*   Updated: 2022/11/25 18:42:05 by jgirard-         ###   ########.fr       */
+/*   Updated: 2022/12/01 18:48:06 by jgirard-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 
 typedef struct philosophers
 {
-	pthread_mutex_t	*fork;
+	pthread_mutex_t	*fork_mutex;
+	int				*fork;
 	pthread_t		*philo;
 	int				nphilo;
 	int				phindex;
@@ -34,6 +35,7 @@ typedef struct times
 	int	tto_eat;
 	int	tto_sleep;
 	int	num_eat;
+	unsigned int start_time;
 }			t_times;
 
 typedef struct s_structs
@@ -42,5 +44,9 @@ typedef struct s_structs
 	t_phil			phil;
 	pthread_mutex_t	print;
 }				t_struct;
+
+int	ft_usleep(useconds_t usec);
+useconds_t	philo_get_time(void);
+void eats(t_struct *s, int index);
 
 #endif
