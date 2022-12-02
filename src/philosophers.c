@@ -6,7 +6,7 @@
 /*   By: jgirard- <jgirard-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 15:36:46 by jgirard-          #+#    #+#             */
-/*   Updated: 2022/12/01 18:59:28 by jgirard-         ###   ########.fr       */
+/*   Updated: 2022/12/02 17:16:54 by jgirard-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,29 @@ void	*philosopher(void *arg)
 
 	s = (t_struct *)arg;
 	int index = s->phil.phindex;
+	unsigned int lasteat;
+	
+	lasteat = s->time.start_time; 
 	//i = 0;
 	//printf("entering philosopher thread\n");
 	//printf("%d", s->phil.nphilo);
 	while (1)
 	{
 		//printf("loop\n");
-		eats(s, index);
-		//LOCK PRINTF
-		// printf SLEEP
+		eats(s, index, &lasteat);
+		if (s->time.die == 0)
+			pthread_mutex_lock(&s->print);
+			printf("%d %d Philo is sleeping\n", philo_get_time() - s->time.start_time, index);
+			pthread_mutex_unlock(&s->print);
+			ft_usleep(s->time.tto_sleep);
+		if (s->time.die == 0)
+			pthread_mutex_lock(&s->print);
+			printf("%d %d Philo is thinking\n", philo_get_time() - s->time.start_time, index);
+			pthread_mutex_unlock(&s->print);
+		if (s->time.die == 1)
+		break;
+		//ft_usleep(s->tim)
+		// printf S
 		// deLOCK PRINTF
 		// ftUSLEEP timetosleep
 		// LOCK PRINTF
@@ -105,13 +119,27 @@ void print_msg(char *msg, mutx) {
 	pthread_mutex_unlock(&s->print);
 }*/
 
-void death_check()
+void *death_check(void *arg)
 {
-	pthread_
+	t_struct	*s;
+
+	s = (t_struct *)arg;
+	s->time.lasteat = malloc(* sizeof(int))
+	while (current - *lasteat >= (unsigned int)s->time.tto_die)
+	
 }
 
-void eats(t_struct *s, int index) 
+void eats(t_struct *s, int index, unsigned int *lasteat) 
 {	
+	unsigned int		current;
+	current = philo_get_time();
+	if (current - *lasteat >= (unsigned int)s->time.tto_die)
+	{
+		s->time.die = 1;
+		pthread_mutex_lock(&s->print);
+		printf("%d Philo has died\n", index);
+		return ;
+	}
 	pthread_mutex_lock(&s->phil.fork_mutex[index]);
 	if (s->phil.fork[index] == 0)
 		s->phil.fork[index] = 1;
@@ -119,8 +147,15 @@ void eats(t_struct *s, int index)
 	//     dea = 1 
 	//lock
 	pthread_mutex_lock(&s->print);
-	printf("%d has taken a fork\n", index);
+	printf("%d %d has taken a fork\n", philo_get_time() - s->time.start_time ,index);
 	pthread_mutex_unlock(&s->print);
+	if (current - *lasteat >= (unsigned int)s->time.tto_die)
+	{
+		s->time.die = 1;
+		pthread_mutex_lock(&s->print);
+		printf("%d Philo has died\n", index);
+		return ;
+	}
 	//delock
 	if (index == 0) {
 		pthread_mutex_lock(&s->phil.fork_mutex[s->phil.nphilo-1]);
@@ -133,9 +168,10 @@ void eats(t_struct *s, int index)
 	}
 	// lock
 	pthread_mutex_lock(&s->print);
-	printf("%d has taken a fork\n", index);
-	printf("%d is eating\n", index);
+	printf("%d %d has taken a fork\n", philo_get_time() - s->time.start_time ,index);
+	printf("%d %d is eating\n", philo_get_time() - s->time.start_time ,index);
 	pthread_mutex_unlock(&s->print);
+	*lasteat = philo_get_time();
 	// delock
 	//phil->timelasteat = time actuel
 	ft_usleep(s->time.tto_eat);
@@ -147,24 +183,38 @@ void eats(t_struct *s, int index)
 		pthread_mutex_unlock(&s->phil.fork_mutex[s->phil.nphilo-1]);
 	}
 	else
+	{
 		s->phil.fork[index-1] = 0;
 		pthread_mutex_unlock(&s->phil.fork_mutex[index-1]);
+	}
 }
+
+
 
 int	main(int ac, char **av)
 {
 	t_struct	s;
+	pthread_t	death;
 	//int			*res;
 	if (ac < 5 || ac > 6)
 	{
 		badargs();
 	}
 	initphvars(ac, av, &s);
-	printf("entering main\n");
-	
+	//printf("entering main\n");
+	/*
 	if (pthread_create())
 	{
-		/* code */
+	}*/
+	
+
+	if (pthread_create(&death, NULL, death_check, &s) != 0)
+		return	(1);
+	
+	for (int i = 0; i < s.phil.nphilo; i++)
+	{
+		if (pthread_join((s.phil.philo[i]), NULL) != 0)
+			return (2);
 	}
 	
 	for (int i = 0; i < s.phil.nphilo; i++)
@@ -174,14 +224,17 @@ int	main(int ac, char **av)
 			return	(1);
 		usleep(100);
 	}
-	printf("thread created\n");
+	//printf("thread created\n");
 	//philosopher(s);
-	for (int i = 0; i < s.phil.nphilo; i++)
+	//for (int i = 0; i < s.phil.nphilo; i++)
+	//{
+	//	if (pthread_join((s.phil.philo[i]), NULL) != 0)
+	//		return (2);
+	//}
+	if (pthread_join(death, NULL) != 0)
 	{
-		if (pthread_join((s.phil.philo[i]), NULL) != 0)
-			return (2);
+		return(2);
 	}
-	
 	//printf("thread joined\n");
 	return (0);
 }

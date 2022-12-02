@@ -2,7 +2,7 @@ NAME = philosophers
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 SRCS_inc = libft.a 
-SRCS = 	src/philosophers.c ft_usleep.c
+SRCS = 	src/philosophers.c src/ft_usleep.c
 OBJ = $(SRCS:.c=.o)
 $(NAME): $(OBJ)
 	@make $(SRCS_inc)

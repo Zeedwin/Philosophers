@@ -6,7 +6,7 @@
 /*   By: jgirard- <jgirard-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 17:01:36 by jgirard-          #+#    #+#             */
-/*   Updated: 2022/12/01 18:48:06 by jgirard-         ###   ########.fr       */
+/*   Updated: 2022/12/02 16:13:20 by jgirard-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ typedef struct times
 	int	tto_sleep;
 	int	num_eat;
 	unsigned int start_time;
+	int		die;
+	int		lasteat;
 }			t_times;
 
 typedef struct s_structs
@@ -47,6 +49,6 @@ typedef struct s_structs
 
 int	ft_usleep(useconds_t usec);
 useconds_t	philo_get_time(void);
-void eats(t_struct *s, int index);
+void eats(t_struct *s, int index, unsigned int *lasteat);
 
 #endif
