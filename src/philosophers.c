@@ -6,7 +6,7 @@
 /*   By: jgirard- <jgirard-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/19 15:36:46 by jgirard-          #+#    #+#             */
-/*   Updated: 2022/12/02 17:16:54 by jgirard-         ###   ########.fr       */
+/*   Updated: 2022/12/04 00:18:12 by jgirard-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,9 +124,12 @@ void *death_check(void *arg)
 	t_struct	*s;
 
 	s = (t_struct *)arg;
-	s->time.lasteat = malloc(* sizeof(int))
+	s->time.lasteat = (unsigned int*)malloc(1 * sizeof(unsigned int));
+	*s->time.lasteat = philo_get_time();
 	while (current - *lasteat >= (unsigned int)s->time.tto_die)
-	
+	{
+		
+	}
 }
 
 void eats(t_struct *s, int index, unsigned int *lasteat) 
@@ -194,7 +197,7 @@ void eats(t_struct *s, int index, unsigned int *lasteat)
 int	main(int ac, char **av)
 {
 	t_struct	s;
-	pthread_t	death;
+	//pthread_t	death;
 	//int			*res;
 	if (ac < 5 || ac > 6)
 	{
@@ -208,14 +211,14 @@ int	main(int ac, char **av)
 	}*/
 	
 
-	if (pthread_create(&death, NULL, death_check, &s) != 0)
-		return	(1);
+	/*if (pthread_create(&death, NULL, death_check, &s) != 0)
+		return	(1);*/
 	
-	for (int i = 0; i < s.phil.nphilo; i++)
-	{
-		if (pthread_join((s.phil.philo[i]), NULL) != 0)
-			return (2);
-	}
+	//for (int i = 0; i < s.phil.nphilo; i++)
+	//{
+	//	if (pthread_join((s.phil.philo[i]), NULL) != 0)
+	//		return (2);
+	//}
 	
 	for (int i = 0; i < s.phil.nphilo; i++)
 	{
@@ -225,16 +228,16 @@ int	main(int ac, char **av)
 		usleep(100);
 	}
 	//printf("thread created\n");
-	//philosopher(s);
-	//for (int i = 0; i < s.phil.nphilo; i++)
-	//{
-	//	if (pthread_join((s.phil.philo[i]), NULL) != 0)
-	//		return (2);
-	//}
-	if (pthread_join(death, NULL) != 0)
+	philosopher(&s);
+	for (int i = 0; i < s.phil.nphilo; i++)
 	{
-		return(2);
+		if (pthread_join((s.phil.philo[i]), NULL) != 0)
+			return (2);
 	}
+	//if (pthread_join(death, NULL) != 0)
+	//{
+	//	return(2);
+	//}
 	//printf("thread joined\n");
 	return (0);
 }

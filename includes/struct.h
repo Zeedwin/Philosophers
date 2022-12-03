@@ -6,7 +6,7 @@
 /*   By: jgirard- <jgirard-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 17:01:36 by jgirard-          #+#    #+#             */
-/*   Updated: 2022/12/02 16:13:20 by jgirard-         ###   ########.fr       */
+/*   Updated: 2022/12/04 00:16:07 by jgirard-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct times
 	int	num_eat;
 	unsigned int start_time;
 	int		die;
-	int		lasteat;
+	unsigned int		*lasteat;
 }			t_times;
 
 typedef struct s_structs
