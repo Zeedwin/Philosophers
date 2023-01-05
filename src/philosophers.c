@@ -88,6 +88,8 @@ void	*philosopher(void *arg)
 			printf("%d %d Philo is thinking\n", philo_get_time() - s->time.start_time, index);
 			pthread_mutex_unlock(&s->print);
 		//if (s->time.die == 1)
+		////	pthread_mutex_lock(&s->print);
+		////	printf("%d %d Philo has died\n", philo_get_time() - s->time.start_time, index);
 		//break;
 		//ft_usleep(s->tim)
 		// printf S
@@ -118,7 +120,7 @@ void print_msg(char *msg, mutx) {
 	printf("%s", index);
 	pthread_mutex_unlock(&s->print);
 }*/
-/*
+
 void *death_check(void *arg)
 {
 	t_struct	*s;
@@ -126,23 +128,29 @@ void *death_check(void *arg)
 	s = (t_struct *)arg;
 	s->time.lasteat = (unsigned int*)malloc(1 * sizeof(unsigned int));
 	*s->time.lasteat = philo_get_time();
-	while (current - *lasteat >= (unsigned int)s->time.tto_die)
+	while(1)
 	{
-		
+		if (philo_get_time() - *s->time.lasteat >= (unsigned int)s->time.tto_die)
+		{
+			pthread_mutex_lock(&s->print);
+			printf("%d %d Philo has died", philo_get_time() - s->time.start_time, s->phil.phindex);
+			exit(1);
+		}
 	}
+	return(NULL);
 }
-*/
+
 void eats(t_struct *s, int index, unsigned int *lasteat) 
 {	
-	unsigned int		current;
-	current = philo_get_time();
-	if (current - *lasteat >= (unsigned int)s->time.tto_die)
+	//unsigned int		current;
+	//current = philo_get_time();
+	/*if (current - *lasteat >= (unsigned int)s->time.tto_die)
 	{
 		s->time.die = 1;
 		pthread_mutex_lock(&s->print);
 		printf("%d %d Philo has died\n", philo_get_time() - s->time.start_time, index);
 		exit (2) ;
-	}
+	}*/
 	pthread_mutex_lock(&s->phil.fork_mutex[index]);
 	if (s->phil.fork[index] == 0)
 		s->phil.fork[index] = 1;
@@ -152,13 +160,13 @@ void eats(t_struct *s, int index, unsigned int *lasteat)
 	pthread_mutex_lock(&s->print);
 	printf("%d %d has taken a fork\n", philo_get_time() - s->time.start_time ,index);
 	pthread_mutex_unlock(&s->print);
-	if (current - *lasteat >= (unsigned int)s->time.tto_die)
+	/*if (current - *lasteat >= (unsigned int)s->time.tto_die)
 	{
 		s->time.die = 1;
 		pthread_mutex_lock(&s->print);
 		printf("%d %d Philo has died\n", philo_get_time() - s->time.start_time, index);
 		exit(1);
-	}
+	}*/
 	//delock
 	if (index == 0) {
 		pthread_mutex_lock(&s->phil.fork_mutex[s->phil.nphilo-1]);
@@ -204,21 +212,20 @@ int	main(int ac, char **av)
 		badargs();
 	}
 	initphvars(ac, av, &s);
-	//printf("entering main\n");
 	/*
 	if (pthread_create())
 	{
 	}*/
 	
 
-	/*if (pthread_create(&death, NULL, death_check, &s) != 0)
-		return	(1);*/
-	
-	//for (int i = 0; i < s.phil.nphilo; i++)
-	//{
-	//	if (pthread_join((s.phil.philo[i]), NULL) != 0)
-	//		return (2);
-	//}
+	if (pthread_create(s.phil.death, NULL, death_check, &s) != 0)	
+		return	(1);
+	/*for (int i = 0; i < s.phil.nphilo; i++)
+	{
+	printf("entering main\n");
+		if (pthread_join((s.phil.philo[i]), NULL) != 0)
+			return (2);
+	}*/
 	
 	for (int i = 0; i < s.phil.nphilo; i++)
 	{

@@ -27,6 +27,7 @@ typedef struct philosophers
 	pthread_t		*philo;
 	int				nphilo;
 	int				phindex;
+	pthread_t		*death;
 }					t_phil;
 
 typedef struct times
