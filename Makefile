@@ -1,24 +1,23 @@
-NAME = philosophers
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
-SRCS_inc = libft.a 
-SRCS = 	src/philosophers.c src/ft_usleep.c
-OBJ = $(SRCS:.c=.o)
-$(NAME): $(OBJ)
-	@make $(SRCS_inc)
-	@$(CC) $(CFLAGS) $(OBJ) ./libft/libft.a  -o $(NAME)
-	@echo Philosophers compilation done !
-all :
-	@make philosophers
-	@echo Compilation done !
-libft.a :
-	@make all -C ./libft
-	@echo Libft compilation done !
-fclean : clean
-	@rm -f $(NAME)
-clean :
-	@rm -f $(OBJ) /libft/obj
-re : fclean all
+CFLAGS=-Werror -Wextra -Wall #-g -fsanitize=thread
+NAME= philo
 
-.PHONY: clean fclean all re
+SRC= philo.c\
+	utils.c\
+	parsing.c\
+	death_checker.c \
+	routine.c
 
+OBJ= ${SRC:%.c=%.o}
+
+$(NAME): ${OBJ}
+	gcc $(OBJ) -o $(NAME) $(CFLAGS)
+
+all:	${NAME}
+
+clean:
+	rm -f ${OBJ}
+
+fclean: clean
+	/bin/rm -f $(NAME)
+
+re: fclean all
