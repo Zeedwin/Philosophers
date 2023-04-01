@@ -6,19 +6,18 @@
 /*   By: jgirard- <jgirard-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/27 05:53:10 by jgirard-          #+#    #+#             */
-/*   Updated: 2023/03/31 19:17:57 by jgirard-         ###   ########.fr       */
+/*   Updated: 2023/04/01 18:18:18 by jgirard-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef PHILO_H
 # define PHILO_H
 
 # include <stdio.h>
-# include <stdlib.h>
-# include <pthread.h>
-# include <unistd.h>
 # include <sys/time.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <pthread.h>
 
 typedef struct s_var
 {
@@ -62,4 +61,5 @@ void			eats(t_philo *ph, int next_id, int id);
 void			min_eats(t_philo *ph);
 void			last_meal(t_philo	*ph);
 void			ft_putendl_fd(char *s, int fd);
+void			error(char *c);
 #endif

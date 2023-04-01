@@ -6,10 +6,9 @@
 /*   By: jgirard- <jgirard-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 05:53:03 by jgirard-          #+#    #+#             */
-/*   Updated: 2023/03/31 19:19:12 by jgirard-         ###   ########.fr       */
+/*   Updated: 2023/04/01 18:14:37 by jgirard-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "philo.h"
 
@@ -23,7 +22,6 @@ void	ft_putendl_fd(char *s, int fd)
 	}
 	write(fd, "\n", 1);
 }
-
 
 void	*philo_routine(void *ph)
 {
@@ -118,5 +116,4 @@ int	main(int argc, char **argv)
 	pthread_create(&checker, NULL, philo_checker, (void *)philo);
 	pthread_join(checker, NULL);
 	pthread_mutex_lock(&var.m_dead);
-	//system("leaks philo");
 }

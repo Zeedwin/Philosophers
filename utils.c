@@ -6,10 +6,9 @@
 /*   By: jgirard- <jgirard-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 05:53:20 by jgirard-          #+#    #+#             */
-/*   Updated: 2023/03/31 19:32:37 by jgirard-         ###   ########.fr       */
+/*   Updated: 2023/04/01 18:16:39 by jgirard-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "philo.h"
 
@@ -61,9 +60,8 @@ void	print(char *str, unsigned long time, int id, t_philo *philo)
 	}
 }
 
-int	ft_isdigit(int c)
+void	error(char *c)
 {
-	if (c >= 48 && c <= 57)
-		return (1);
-	return (0);
+	ft_putendl_fd(c, 1);
+	exit(1);
 }

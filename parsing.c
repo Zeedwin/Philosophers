@@ -6,25 +6,17 @@
 /*   By: jgirard- <jgirard-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 05:52:53 by jgirard-          #+#    #+#             */
-/*   Updated: 2023/03/31 19:28:55 by jgirard-         ###   ########.fr       */
+/*   Updated: 2023/04/01 18:16:29 by jgirard-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "philo.h"
 
-
-void	error(char *c)
-{
-	ft_putendl_fd(c, 1);
-	exit(1);
-}
-
-void	badargs()
+void	badargs(void)
 {
 	error("\033[91;1mError: Bad Params\n""\033[95;1mUsage:\033[0m./philosophers "
-	"\033[92;1mNUMBER_OF_PHILOS TIME_TO_EAT "
-	"TIME_TO_DIE TIME_TO_SLEEP \033[93;1mNUMBER_OF_TIMES_PHILOS_EAT");
+		"\033[92;1mNUMBER_OF_PHILOS TIME_TO_EAT "
+		"TIME_TO_DIE TIME_TO_SLEEP \033[93;1mNUMBER_OF_TIMES_PHILOS_EAT");
 }
 
 int	print_invalid_arg(void)

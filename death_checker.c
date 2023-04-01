@@ -6,10 +6,9 @@
 /*   By: jgirard- <jgirard-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 15:06:29 by jgirard-          #+#    #+#             */
-/*   Updated: 2023/03/31 19:33:13 by jgirard-         ###   ########.fr       */
+/*   Updated: 2023/04/01 18:15:48 by jgirard-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "philo.h"
 
@@ -66,4 +65,11 @@ void	*philo_checker(void *ph)
 			i = -1;
 		i++;
 	}
+}
+
+int	ft_isdigit(int c)
+{
+	if (c >= 48 && c <= 57)
+		return (1);
+	return (0);
 }
